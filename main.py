@@ -1,17 +1,21 @@
-# def main():
-#     book_path = "books/frankenstein.txt"
-#     with open(book_path) as f:
-#         file_contents = f.read()
-#     print(file_contents)
-
 def main():
     book_path = "books/frankenstein.txt"
     text = get_book_text(book_path)
     words = count_words(text)
     chars_dict = count_characters(text)
-    print(f"This book contains {words} words.")
+    sorted_list = dict_to_list(chars_dict)
+
+    print(f"--- Report of {book_path} ---")
+    print(f"This file contains {words} words.")
+    print()
     print("Occurence of each character:")
-    print(chars_dict)
+
+    for item in sorted_list:
+        if not item["char"].isalpha():
+            continue
+        print(f"Letter '{item['char']}' spotted {item['num']} times.")
+
+    print("--- End ---")
 
 def get_book_text(path):
     with open(path) as f:
@@ -31,5 +35,14 @@ def count_characters(text):
             characters[lowered] += 1
     return characters
 
+def sort_on(dict):
+    return dict["num"]
     
+def dict_to_list(dict):
+    sorted_list = []
+    for d in dict:
+        sorted_list.append({"char":d, "num":dict[d]})
+    sorted_list.sort(reverse=True, key=sort_on)
+    return sorted_list
+
 main()
