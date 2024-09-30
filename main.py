@@ -1,3 +1,5 @@
+import customtkinter as ctk # type: ignore
+
 def main():
     book_path = "books/frankenstein.txt"
     text = get_book_text(book_path)
@@ -45,4 +47,11 @@ def dict_to_list(dict):
     sorted_list.sort(reverse=True, key=sort_on)
     return sorted_list
 
-main()
+# create window
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("dark-blue")
+root = ctk.CTk()
+root.title("Bookbot")
+root.geometry("500x500")
+
+root.mainloop()
