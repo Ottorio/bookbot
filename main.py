@@ -1,25 +1,6 @@
 import customtkinter as ctk # pip3 install customtkinter
 from tkinter import filedialog # pip3 install tk
 
-def main():
-    book_path = "books/frankenstein.txt"
-    text = get_book_text(book_path)
-    words = count_words(text)
-    chars_dict = count_characters(text)
-    sorted_list = dict_to_list(chars_dict)
-
-    print(f"--- Report of {book_path} ---")
-    print(f"This file contains {words} words.")
-    print()
-    print("Occurence of each character:")
-
-    for item in sorted_list:
-        if not item["char"].isalpha():
-            continue
-        print(f"Letter '{item['char']}' spotted {item['num']} times.")
-
-    print("--- End ---")
-
 def get_book_text(path):
     with open(path) as f:
         return f.read()
@@ -49,12 +30,29 @@ def dict_to_list(dict):
     return sorted_list
 
 def choose_document():
-    file_location = filedialog.askopenfile()
+    file_location = filedialog.askopenfilename()
     book_path_entry.delete(0, ctk.END)
     book_path_entry.insert(0, file_location)
 
 def analyze():
     result_label.configure(text="test", font=("Roboto", 15))
+    book_path = book_path_entry.get()
+    text = get_book_text(book_path)
+    words = count_words(text)
+    chars_dict = count_characters(text)
+    sorted_list = dict_to_list(chars_dict)
+
+    print(f"--- Report of {book_path} ---")
+    print(f"This file contains {words} words.")
+    print()
+    print("Occurence of each character:")
+
+    for item in sorted_list:
+        if not item["char"].isalpha():
+            continue
+        print(f"Letter '{item['char']}' spotted {item['num']} times.")
+
+    print("--- End ---")
 
 # create window
 ctk.set_appearance_mode("dark")
